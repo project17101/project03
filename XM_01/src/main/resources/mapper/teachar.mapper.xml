@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.TeacharMapper">
+
+	<select id="findteachar" resultType="Map">
+		SELECT EDU_TEACHER.ID, EDU_TEACHER.NAME, EDU_TEACHER.EDUCATION, EDU_TEACHER.CAREER, EDU_TEACHER.IS_STAR, EDU_TEACHER.PIC_PATH, EDU_TEACHER.STATUS, date_format(EDU_TEACHER.CREATE_TIME,'%Y/%m/%d') CREATE_TIME, EDU_TEACHER.UPDATE_TIME, EDU_TEACHER.SUBJECT_ID, EDU_TEACHER.SORT 
+			FROM EDU_TEACHER left join sys_subject on EDU_TEACHER.SUBJECT_ID = sys_subject.subject_id 
+			WHERE EDU_TEACHER.STATUS=0 ORDER BY EDU_TEACHER.SORT desc
+	</select>
+</mapper>

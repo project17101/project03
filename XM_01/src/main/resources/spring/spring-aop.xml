@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- 配置事务通知 -->
+	<tx:advice transaction-manager="transactionManager" id="myadvice">
+		<tx:attributes>
+			<tx:method name="find*" read-only="true"/>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="select*" read-only="true"/>
+			
+			<tx:method name="add*" isolation="READ_COMMITTED" rollback-for="Exception"/>
+			<tx:method name="save*" isolation="READ_COMMITTED" rollback-for="Exception"/>
+			<tx:method name="update*" isolation="READ_COMMITTED" rollback-for="Exception"/>
+			<tx:method name="delete*" isolation="READ_COMMITTED" rollback-for="Exception"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(* com.demo.service.*.*(..))" id="mypointcut"/>
+		<aop:advisor advice-ref="myadvice" pointcut-ref="mypointcut"/>
+	</aop:config>
+
+</beans>
