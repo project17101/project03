@@ -7,7 +7,7 @@ import com.demo.model.EduWebsiteImages;
 public interface EduWebsiteImagesMapper {
 	
 	/**
-	 * 获取所有广告图信息
+	 * 鑾峰彇鎵�鏈夊箍鍛婂浘淇℃伅
 	 * @return
 	 */
 	public List<EduWebsiteImages> findAdImgAll();

@@ -15,7 +15,7 @@ import com.github.pagehelper.PageInfo;
 
 /**
  * @author ZHAIYIBAO
- *	Ã½Ìå¹ã¸æ¹ÜÀí
+ *	Ã½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 @Controller
 public class MediaAdSys {
@@ -40,4 +40,12 @@ public class MediaAdSys {
 		
 		return map;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 }
