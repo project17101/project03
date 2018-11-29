@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.EduWebsiteImagesMapper">
+	<select id="findAdImgAll" parameterType="EduWebsiteImages" resultType="EduWebsiteImages">
+		select edu_website_images.image_id, edu_website_images.image_url, edu_website_images.link_address, edu_website_images.title, edu_website_images.type_id, edu_website_images.series_number, edu_website_images.preview_url, edu_website_images.color, edu_website_images.describe , edu_website_images_type.type_name 
+		from edu_website_images left join edu_website_images_type on edu_website_images_type.type_id =edu_website_images.type_id order by edu_website_images_type.type_id,edu_website_images.series_number
+	</select>
+</mapper>
