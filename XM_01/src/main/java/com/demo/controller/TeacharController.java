@@ -27,4 +27,11 @@ public class TeacharController {
 		map.put("rows", pageinfo.getList());
 		return map;
 	}
+	
+	@RequestMapping("delteachar")
+	public @ResponseBody Integer delteachar(Integer ID){
+		System.out.println(ID);
+		
+		return teacharService.delteachar(ID);
+	}
 }

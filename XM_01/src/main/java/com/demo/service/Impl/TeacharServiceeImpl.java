@@ -23,9 +23,15 @@ public class TeacharServiceeImpl implements TeacharService {
 		Integer pagesize=teachar.getPagesize();
 		PageHelper.offsetPage(startrow, pagesize);
 
-		List<Teachar> list=teacharMapper.findteachar();
+		List<Teachar> list=teacharMapper.findteachar(teachar);
 		PageInfo<Teachar> pageInfo=new PageInfo<Teachar>(list);
 		return pageInfo ;
+	}
+
+
+	public Integer delteachar(Integer id) {
+		// TODO Auto-generated method stub
+		return teacharMapper.delteachar(id);
 	}
 
 }

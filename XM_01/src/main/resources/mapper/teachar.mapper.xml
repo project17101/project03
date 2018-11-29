@@ -3,9 +3,23 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.mapper.TeacharMapper">
 
-	<select id="findteachar" resultType="Map">
+	<select id="findteachar" resultType="Map" parameterType="Teachar">
 		SELECT EDU_TEACHER.ID, EDU_TEACHER.NAME, EDU_TEACHER.EDUCATION, EDU_TEACHER.CAREER, EDU_TEACHER.IS_STAR, EDU_TEACHER.PIC_PATH, EDU_TEACHER.STATUS, date_format(EDU_TEACHER.CREATE_TIME,'%Y/%m/%d') CREATE_TIME, EDU_TEACHER.UPDATE_TIME, EDU_TEACHER.SUBJECT_ID, EDU_TEACHER.SORT 
 			FROM EDU_TEACHER left join sys_subject on EDU_TEACHER.SUBJECT_ID = sys_subject.subject_id 
-			WHERE EDU_TEACHER.STATUS=0 ORDER BY EDU_TEACHER.SORT desc
+			WHERE EDU_TEACHER.STATUS=0 
+			<if test="name!=null and name!=''">
+				and EDU_TEACHER.NAME=#{name}
+			</if>
+			<if test="is_star!=null and is_star!='' ">
+				and EDU_TEACHER.IS_STAR=#{is_star}
+			</if>
+			<if test="start_time!=null and start_time!='' and end_time!=null and end_time!=''">
+				and EDU_TEACHER.CREATE_TIME >#{start_time} and #{end_time}>EDU_TEACHER.CREATE_TIME
+			</if>
+			ORDER BY EDU_TEACHER.SORT desc
 	</select>
+	
+	<delete id="delteachar" parameterType="java.lang.Integer">
+		delete from EDU_TEACHER where ID=#{id}
+	</delete>
 </mapper>

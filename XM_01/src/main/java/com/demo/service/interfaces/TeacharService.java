@@ -8,5 +8,7 @@ public interface TeacharService {
 	
 	public PageInfo<Teachar> findteachar(Teachar teachar);
 	
+	public Integer delteachar(Integer id);
+	
 
 }
