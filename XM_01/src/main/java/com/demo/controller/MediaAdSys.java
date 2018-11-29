@@ -35,8 +35,21 @@ public class MediaAdSys {
 		Map map=new HashMap<String, Object>();
 		map.put("rows", pageInfo.getList());
 		map.put("total", pageInfo.getTotal());
-		System.out.println("map:"+map.toString());
+		//System.out.println("map:"+map.toString());
+		
+		
 		return map;
 	}
-
+	public Map<String, Object> findAd11ImgAll(EduWebsiteImages ewi){
+		
+		PageInfo<EduWebsiteImages> pageInfo = ewiService.findAdImgAll(ewi);
+		System.out.println("pageInfo:"+pageInfo.toString());
+		Map map=new HashMap<String, Object>();
+		map.put("rows", pageInfo.getList());
+		map.put("total", pageInfo.getTotal());
+		//System.out.println("map:"+map.toString());
+		
+		
+		return map;
+	}
 }
