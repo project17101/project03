@@ -51,7 +51,6 @@ public class TeacharController {
 	}
 	@RequestMapping("addteachar")
 	public @ResponseBody Integer addteachar(Teachar teachar){
-
 		teacharService.addteachar(teachar);
 		return null;
 	}

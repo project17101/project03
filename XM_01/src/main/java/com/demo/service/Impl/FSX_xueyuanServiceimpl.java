@@ -20,7 +20,7 @@ public class FSX_xueyuanServiceimpl implements FSX_xueyuanService{
 	@Autowired
 	FSX_xueyuanmapper mapper;
 	
-	@Override
+	 
 	public PageInfo<FSX_xueyuan> xueyuan(FSX_xueyuan fsx_xueyuan) {
 		Integer startrow=fsx_xueyuan.getStartrow();
 		Integer pagesize=fsx_xueyuan.getPagesize();
@@ -32,24 +32,24 @@ public class FSX_xueyuanServiceimpl implements FSX_xueyuanService{
 		return pageinfo;
 	}
 
-	@Override
+	 
 	public List<Map> xialakuang() {
 		
 		return mapper.xialakuang();
 	}
 
-	@Override
+	 
 	public void upedate(FSX_xueyuan xueyuan) {
 		mapper.upedate(xueyuan);
 		
 	}
 
-	@Override
+	 
 	public void djie(FSX_xueyuan xueyuan) {
 		mapper.djie(xueyuan);
 	}
 
-	@Override
+	 
 	public PageInfo<FSX_xueyuanchengji> chengji(FSX_xueyuanchengji fsx) {
 		Integer startrow=fsx.getStartrow();
 		Integer pagesize=fsx.getPagesize();
@@ -59,7 +59,7 @@ public class FSX_xueyuanServiceimpl implements FSX_xueyuanService{
 		return pageinfo;
 	}
 
-	@Override
+	 
 	public List<FSX_xueyuanchengji> shijuan() {
 		// TODO Auto-generated method stub
 		return mapper.shijuan();

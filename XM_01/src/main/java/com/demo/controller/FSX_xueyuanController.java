@@ -28,7 +28,7 @@ public class FSX_xueyuanController {
 		
 		PageInfo<FSX_xueyuan> pageinfo=xueyuanservice.xueyuan(fsx_xueyuan);
 		
-		Map map=new HashMap<>();
+		Map map=new HashMap<Object, Object>();
 		map.put("rows", pageinfo.getList());
 		map.put("total", pageinfo.getTotal());
 		
@@ -63,7 +63,7 @@ public class FSX_xueyuanController {
 	public @ResponseBody Map<String,Object> chengji(FSX_xueyuanchengji fsx){
 		PageInfo<FSX_xueyuanchengji> pageinfo=xueyuanservice.chengji(fsx);
 		
-		Map map=new HashMap<>();
+		Map map=new HashMap<Object, Object>();
 		map.put("rows", pageinfo.getList());
 		map.put("total", pageinfo.getTotal());
 		return map;
