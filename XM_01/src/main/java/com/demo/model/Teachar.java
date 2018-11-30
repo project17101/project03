@@ -1,7 +1,11 @@
 package com.demo.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Teachar extends PageBean{
-	
+	//文件上传所以需要字段
+	private MultipartFile imgfile;
+
 	private Integer id;
 	private String name;
 	private String education; 
@@ -95,5 +99,10 @@ public class Teachar extends PageBean{
 	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
-	
+	public MultipartFile getImgfile() {
+		return imgfile;
+	}
+	public void setImgfile(MultipartFile imgfile) {
+		this.imgfile = imgfile;
+	}
 }
