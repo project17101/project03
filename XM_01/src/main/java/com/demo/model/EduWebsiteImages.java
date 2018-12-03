@@ -2,19 +2,30 @@ package com.demo.model;
 
 /**
  * @author ZHAIYIBAO
- *	bannerÍ¼¹ÜÀí
+ *	bannerÍ¼ï¿½ï¿½ï¿½ï¿½
  */
 public class EduWebsiteImages extends PageBean {
 
 	private Integer image_id;	//
-	private String image_url;	//Í¼Æ¬µØÖ·
-	private String link_address;	//Í¼Á´½ÓµØÖ·
-	private String title;		//Í¼±êÌâ
-	private Integer type_id;	//Í¼Æ¬ÀàÐÍ
-	private Integer series_number;	//ÐòÁÐºÅ
-	private String preview_url;	//ÂÔËõÍ¼Æ¬µØÖ·
-	private String color;		//±³¾°É«
-	private String describe;	//Í¼Æ¬ÃèÊö 
+	private String image_url;	//Í¼Æ¬ï¿½ï¿½Ö·
+	private String link_address;	//Í¼ï¿½ï¿½ï¿½Óµï¿½Ö·
+	private String title;		//Í¼ï¿½ï¿½ï¿½ï¿½
+	private Integer type_id;	//Í¼Æ¬ï¿½ï¿½ï¿½ï¿½
+	private Integer series_number;	//ï¿½ï¿½ï¿½Ðºï¿½
+	private String preview_url;	//ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½Ö·
+	private String color;		//ï¿½ï¿½ï¿½ï¿½É«
+	private String describe;	//Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ 
+	
+	private String type_name;
+	
+	
+	
+	public String getType_name() {
+		return type_name;
+	}
+	public void setType_name(String type_name) {
+		this.type_name = type_name;
+	}
 	public Integer getImage_id() {
 		return image_id;
 	}
@@ -73,8 +84,9 @@ public class EduWebsiteImages extends PageBean {
 	public String toString() {
 		return "EduWebsiteImages [image_id=" + image_id + ", image_url=" + image_url + ", link_address=" + link_address
 				+ ", title=" + title + ", type_id=" + type_id + ", series_number=" + series_number + ", preview_url="
-				+ preview_url + ", color=" + color + ", describe=" + describe + "]";
+				+ preview_url + ", color=" + color + ", describe=" + describe + ", type_name=" + type_name + "]";
 	}
+	
 	
 	
 	

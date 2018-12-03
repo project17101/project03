@@ -4,14 +4,36 @@
 <mapper namespace="com.demo.mapper.EduWebsiteImagesMapper">
 	<select id="findAdImgAll" parameterType="EduWebsiteImages" resultType="EduWebsiteImages">
 		select edu_website_images.image_id, edu_website_images.image_url, edu_website_images.link_address, edu_website_images.title, edu_website_images.type_id, edu_website_images.series_number, edu_website_images.preview_url, edu_website_images.color, edu_website_images.describe , edu_website_images_type.type_name 
-		from edu_website_images left join edu_website_images_type on edu_website_images_type.type_id =edu_website_images.type_id order by edu_website_images_type.type_id,edu_website_images.series_number
+		from edu_website_images left join edu_website_images_type on edu_website_images_type.type_id =edu_website_images.type_id where 0=0 
+		<if test="title!=null and title!=''">
+			and edu_website_images.title like '%${title}%'
+		</if>
+		<if test="type_id!=null and type_id!=''">
+			and edu_website_images.type_id=#{type_id}
+		</if>
+		order by edu_website_images_type.type_id,edu_website_images.series_number
 	</select>
+	<delete id="delAdImgById" parameterType="java.lang.Integer">
+		delete from edu_website_images where image_id = #{image_id}
+	</delete>
 	
 	
 	
-	
+	<!-- *******************广告类型********************  -->
 	<!-- 获取所有图片类型 -->
 	<select id="findAdImgTypeAll" resultType="EduWebsiteImagesType">
-		select type_id as typeid,type_name as typename from edu_website_images_type 
+		select type_id,type_name from edu_website_images_type 
 	</select>
+	<!-- 添加广告图片类型 -->
+	<insert id="AddAdImgType" parameterType="EduWebsiteImagesType">
+		insert into edu_website_images_type values(null,#{type_name})
+	</insert>
+	<!-- 根据Id删除广告类型 -->
+	<delete id="delAdImgTypeById" parameterType="java.lang.Integer">
+		delete from edu_website_images_type where type_id = #{type_id}
+	</delete>
+	<!-- 修改广告类型名称 -->
+	<update id="upAdImgTypeById" parameterType="EduWebsiteImagesType">
+		update edu_website_images_type set type_name=#{type_name} where type_id=#{type_id}
+	</update>
 </mapper>

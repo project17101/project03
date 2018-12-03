@@ -3,6 +3,7 @@ package com.demo.service.interfaces;
 import java.util.List;
 
 import com.demo.model.EduWebsiteImages;
+import com.demo.model.EduWebsiteImagesType;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -12,9 +13,31 @@ import com.github.pagehelper.PageInfo;
 public interface EduWebsiteImagesService {
 	
 	/**
-	 * »ñÈ¡ËùÓÐ¹ã¸æÍ¼ÐÅÏ¢
+	 * ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ð¹ï¿½ï¿½Í¼ï¿½ï¿½Ï¢
 	 * @return
 	 */
 	public PageInfo<EduWebsiteImages> findAdImgAll(EduWebsiteImages ewi);
+	
+	public void delAdImgById(Integer image_id);
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * @param ewi
+	 * @return
+	 * 
+	 */
+	public List<EduWebsiteImagesType> findAdImgTypeAll();
+	
+	public void AddAdImgType(EduWebsiteImagesType ewit);
+	
+	public void delAdImgTypeById(Integer type_id);
+	
+	public void upAdImgTypeById(EduWebsiteImagesType ewit);
 
 }
