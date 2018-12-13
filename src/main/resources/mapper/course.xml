@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	namespace的值必须要和扫描的接口的全类名一致
+	parameterType,resultType
+	接口中的方法名必须和id的值一致
+ -->
+ 
+ <mapper namespace="com.demo.mapper.CourseMapper">
+ 
+ 	<select id="findCourseTJ"  resultType="Course_tuijian" parameterType="Course_tuijian">
+	 select  ewcd.ID,ec.COURSE_NAME,ewc.NAME,ewcd.order_num,ec.IS_AVALIABLE
+	 from edu_website_course  ewc,edu_website_course_detail ewcd,edu_course ec
+	 where ewcd.RECOMMEND_ID = ewc.id AND ewcd.COURSE_ID = ec.COURSE_ID
+	<if test="course_name!=null and course_name !='' ">
+		and ec.course_name like '%${course_name}%' 
+	</if>
+	<if test="is_avaliable!=null and is_avaliable !=''">
+		and ec.is_avaliable=#{is_avaliable}
+	</if>
+	 <if test="class_id!=null and class_id!=''">
+		and ewc.id=#{class_id}
+	</if>
+ 	</select>
+ 	
+ <select id="findcourse_lx" resultType="edu_website_course">
+   select id,name from edu_website_course
+ </select>
+ 	<delete id="deleteTJ" parameterType="java.lang.Integer">
+ 	delete from edu_website_course_detail where id=#{id}
+ 	</delete>
+ </mapper>

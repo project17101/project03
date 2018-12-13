@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.Exam_listMapper">
+	<select id="findallexan_list" resultType="java.util.Map" parameterType="Exam_list">
+		SELECT l.id, l.qtype, l.qlevel, l.qfrom, l.content, l.postdate, l.skey, l.keydesc, l.status, l.dbid, l.adminid ,d.dname,d.status
+		from edu_exam_list l, edu_exam_db d
+		where l.dbid=d.id
+		<if test="content!=null and content!=''">
+		and l.content like '%${content}%'
+		</if>
+		<if test="dbid!=null and dbid!=''">
+		and l.dbid = #{dbid}
+		</if>
+		<if test="qtype!=null and qtype!=''">
+		and l.qtype=#{qtype}
+		</if>
+		<if test="qlevel!=null and qlevel!=''">
+		and l.qlevel=#{qlevel}
+		</if>
+		<if test="status!=null and status!=''">
+		and l.status = #{status}
+		</if>
+	</select>
+	
+	<select id="findexam" resultType="Exam_db">
+		 SELECT id ,dname from edu_exam_db
+	</select>
+	
+	<delete id="delexam_list" parameterType="java.lang.Integer">
+		delete from edu_exam_list where id=#{id}
+	</delete>
+	
+	<insert id="addExam_list" parameterType="Exam_list" useGeneratedKeys="true"  keyProperty="id">
+		INSERT INTO 
+		edu_exam_list ( id, qtype,  qlevel,  qfrom,  content,  postdate,  skey,  keydesc,  status,  dbid,  adminid ) 
+		VALUES(#{id}, #{qtype}, #{qlevel}, #{qfrom}, #{content}, now(), #{skey}, #{keydesc}, #{status}, #{dbid}, 1 ) 	
+	</insert>
+	
+	<insert id="addExam_options" parameterType="java.util.List">
+		insert into edu_exam_options(qid,opt,soption) values(#{qid},#{opt},#{soption}) 
+	</insert>
+	<update id="updateExam_list" parameterType="Exam_list">
+		UPDATE edu_exam_list 
+		SET qtype = #{qtype}, qlevel = #{qlevel}, qfrom = #{qfrom}, content = #{content}, skey=#{skey} 
+		WHERE id = #{id} 
+	</update>
+</mapper>

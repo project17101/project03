@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.Icon_userMapper">
+	
+	<select id="findIcon" resultType="Icon_user" parameterType="Icon_user">
+		SELECT SYS_USER.USER_ID, SYS_USER.LOGIN_NAME, SYS_USER.LOGIN_PWD, SYS_USER.USER_NAME, SYS_USER.STATUS, SYS_USER.LAST_LOGIN_TIME, SYS_USER.LAST_LOGIN_IP, SYS_USER.CREATE_TIME, SYS_USER.EMAIL, SYS_USER.TEL, SYS_USER.ROLE_ID
+		FROM SYS_USER 
+		WHERE SYS_USER.STATUS!=2 
+		<if test="login_name!=null and login_name!=''">
+		and SYS_USER.LOGIN_NAME=#{login_name}
+		
+		or SYS_USER.EMAIL=#{login_name}
+		</if>
+		ORDER BY SYS_USER.USER_ID 
+	</select>
+	
+	
+	<delete id="deluser" parameterType="java.lang.Integer">
+		delete from SYS_USER where USER_ID=#{user_id}
+	</delete>
+	
+	<select id="toadduser" resultType="Role">
+		SELECT SYS_ROLE.ROLE_ID, SYS_ROLE.ROLE_NAME, SYS_ROLE.CREATE_TIME FROM SYS_ROLE 
+	</select>
+	
+	
+	<insert id="adduser" parameterType="Icon_user">
+		INSERT INTO SYS_USER
+		( SYS_USER.USER_ID, SYS_USER.LOGIN_NAME, SYS_USER.LOGIN_PWD, SYS_USER.USER_NAME, SYS_USER.STATUS, SYS_USER.LAST_LOGIN_TIME, SYS_USER.LAST_LOGIN_IP, SYS_USER.CREATE_TIME, SYS_USER.EMAIL, SYS_USER.TEL, SYS_USER.ROLE_ID ) 
+		VALUE(null, #{login_name}, #{login_pwd}, #{user_name}, 0, null, null, now(), #{email}, #{tel}, #{role_id} ) 
+	</insert>
+	
+	<select id="toupsuser" parameterType="java.lang.Integer" resultType="Icon_user">
+		SELECT SYS_USER.USER_ID, SYS_USER.LOGIN_NAME, SYS_USER.LOGIN_PWD, SYS_USER.USER_NAME, SYS_USER.STATUS, SYS_USER.LAST_LOGIN_TIME, SYS_USER.LAST_LOGIN_IP, SYS_USER.CREATE_TIME, SYS_USER.EMAIL, SYS_USER.TEL, SYS_USER.ROLE_ID 
+		FROM SYS_USER 
+		WHERE SYS_USER.USER_ID=#{user_id}
+	</select>
+	
+	<update id="updateuserbyid" parameterType="Icon_user">
+		UPDATE SYS_USER 
+		SET SYS_USER.USER_NAME=#{user_name}, SYS_USER.EMAIL=#{email}, SYS_USER.TEL=#{tel}, SYS_USER.ROLE_ID=#{role_id},SYS_USER.LOGIN_PWD=#{login_pwd}
+		WHERE SYS_USER.USER_ID=#{user_id}
+	</update>
+	
+	<select id="findlogbyid" parameterType="java.lang.Integer" resultType="Login_log">
+		SELECT SYS_LOGIN_LOG.LOG_ID, SYS_LOGIN_LOG.LOGIN_TIME, SYS_LOGIN_LOG.IP, SYS_LOGIN_LOG.USER_ID, SYS_LOGIN_LOG.OS_NAME, SYS_LOGIN_LOG.USER_AGENT 
+		FROM SYS_LOGIN_LOG 
+		WHERE SYS_LOGIN_LOG.USER_ID=#{user_id} ORDER BY SYS_LOGIN_LOG.LOGIN_TIME DESC
+	</select>
+	
+	<update id="upuserstatus" parameterType="Icon_user">
+		update SYS_USER set STATUS=#{status}  where USER_ID=#{user_id}
+	</update>
+</mapper>

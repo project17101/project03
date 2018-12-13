@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.Inxedu_teacharMapper">
+	<select id="findallsubject" resultType="java.util.Map" >
+		SELECT subject_id,subject_name from sys_subject where parent_id = 0
+	</select>
+	
+	<select id="findallteachar"  resultType="Teachar" parameterType="java.util.Map">
+		SELECT EDU_TEACHER.ID, EDU_TEACHER.NAME, EDU_TEACHER.EDUCATION, EDU_TEACHER.CAREER, EDU_TEACHER.IS_STAR, EDU_TEACHER.PIC_PATH, EDU_TEACHER.STATUS, EDU_TEACHER.CREATE_TIME, EDU_TEACHER.UPDATE_TIME, EDU_TEACHER.SUBJECT_ID, EDU_TEACHER.SORT 
+		FROM EDU_TEACHER left join sys_subject on EDU_TEACHER.SUBJECT_ID = sys_subject.subject_id 
+		WHERE EDU_TEACHER.STATUS=0
+		<if test="subject_id!=null and subject_id!=''">
+			and edu_teacher.subject_id=#{subject_id}
+		</if>
+		ORDER BY EDU_TEACHER.SORT DESC 
+	</select>
+	
+	<select id="findallteacharbyid" parameterType="java.lang.Integer" resultType="Teachar">
+	select  id,  name,  education,  career,  is_star,  pic_path,  status,  create_time,  update_time,  subject_id,  sort
+	from  edu_teacher  where id=#{id}
+	</select>
+</mapper>

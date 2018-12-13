@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.Edu_article_Mapper">
+    <select id="findEdu_article" resultType="Edu_article" parameterType="Edu_article">
+       SELECT EDU_ARTICLE.ARTICLE_ID, EDU_ARTICLE.TITLE, EDU_ARTICLE.SUMMARY, EDU_ARTICLE.IMAGE_URL, EDU_ARTICLE.SOURCE, 
+       EDU_ARTICLE.AUTHOR,EDU_ARTICLE.CREATE_TIME, EDU_ARTICLE.PUBLISH_TIME, EDU_ARTICLE.ARTICLE_TYPE, EDU_ARTICLE.CLICK_NUM,
+       EDU_ARTICLE.PRAISE_COUNT, EDU_ARTICLE.COMMENT_NUM, EDU_ARTICLE.SORT 
+       FROM EDU_ARTICLE where 1=1       
+       <!-- 文章类型的查询 -->
+         <if test="ARTICLE_TYPE!=null and ARTICLE_TYPE!=''"> and EDU_ARTICLE.ARTICLE_TYPE=${ARTICLE_TYPE}</if>  
+            
+         <if test="AUTHOR!=null and AUTHOR!=''">
+			and (EDU_ARTICLE.TITLE LIKE '%${AUTHOR}%' OR EDU_ARTICLE.SOURCE LIKE '%${AUTHOR}%' OR EDU_ARTICLE.AUTHOR LIKE '%${AUTHOR}%')
+		</if>		
+ <!--       作者的模糊查询 
+         <if test="AUTHOR!=null and AUTHOR!=''"> and EDU_ARTICLE.AUTHOR like  '%${AUTHOR}%' </if>  
+          文章标题的查询 
+         <if test="TITLE!=null and TITLE!=''"> and EDU_ARTICLE.TITLE=${TITLE}</if> 
+         文章来源的查询 
+         <if test="SOURCE!=null and SOURCE!=''"> and EDU_ARTICLE.SOURCE=${SOURCE}</if>  
+   -->                       
+       <!-- 日期时间的查询 -->  
+		<if test="time_start!=null and time_start!=''"> and EDU_ARTICLE.CREATE_TIME> #{time_start} AND EDU_ARTICLE.CREATE_TIME &lt; #{time_end}
+		</if>
+		 order by sort desc,PUBLISH_TIME desc limit 0,12 
+    </select>
+    
+    <!-- 到修改 -->
+       <select id="toupdEdu_article" resultType="Edu_article" parameterType="Edu_article">
+       SELECT EDU_ARTICLE.ARTICLE_ID,EDU_ARTICLE_CONTENT.CONTENT , EDU_ARTICLE.TITLE, EDU_ARTICLE.SUMMARY, EDU_ARTICLE.IMAGE_URL,
+       EDU_ARTICLE.SOURCE, EDU_ARTICLE.AUTHOR,EDU_ARTICLE.CREATE_TIME, EDU_ARTICLE.PUBLISH_TIME, EDU_ARTICLE.ARTICLE_TYPE, 
+       EDU_ARTICLE.CLICK_NUM, EDU_ARTICLE.PRAISE_COUNT, EDU_ARTICLE.COMMENT_NUM, EDU_ARTICLE.SORT 
+       FROM EDU_ARTICLE,EDU_ARTICLE_CONTENT where 
+       EDU_ARTICLE.ARTICLE_ID=EDU_ARTICLE_CONTENT.ARTICLE_ID AND EDU_ARTICLE.ARTICLE_ID=#{ARTICLE_ID}  
+       LIMIT 0,1
+    </select>  
+    
+    
+    <!-- 删除    批量删除      删除语句进行过修改      -->
+    <delete id="delEdu_article" parameterType="java.util.List">
+    delete from EDU_ARTICLE where ARTICLE_ID in 
+    <foreach collection="ARTICLE_ID" item="ARTICLE_ID" open="(" close=")" separator=",">
+			#{ARTICLE_ID}
+		</foreach>
+    </delete>
+    
+    <!-- addEdu_article   添加 -->
+    <insert id="addEdu_article" parameterType="Edu_article">
+        INSERT INTO edu_article values(null, #{TITLE}, #{SUMMARY}, #{KEY_WORD}, #{IMAGE_URL}, #{SOURCE}, #{AUTHOR}, now(), now(), #{LINK}, #{ARTICLE_TYPE}, #{CLICK_NUM}, #{PRAISE_COUNT}, #{COMMENT_NUM}, #{SORT})
+    </insert>
+    
+     <insert id="addEdu_article_content" parameterType="Edu_article_content">    
+        INSERT INTO EDU_ARTICLE_CONTENT values( null, #{CONTENT} )
+    </insert>
+    
+    <!--    updEdu_article     到修改 --> 
+    <update id="updEdu_article" parameterType="Edu_article">
+       update edu_article set ARTICLE_ID=#{ARTICLE_ID}, TITLE=#{TITLE}, SUMMARY=#{SUMMARY}, KEY_WORD=#{KEY_WORD}, IMAGE_URL=#{IMAGE_URL}, SOURCE=#{SOURCE}, 
+      AUTHOR= #{AUTHOR}, CREATE_TIME=now(), PUBLISH_TIME=now(),LINK= #{LINK}, ARTICLE_TYPE=#{ARTICLE_TYPE}, CLICK_NUM=#{CLICK_NUM}, 
+      PRAISE_COUNT=#{PRAISE_COUNT},
+      COMMENT_NUM= #{COMMENT_NUM}, SORT=#{SORT}
+       where ARTICLE_ID=#{ARTICLE_ID}
+    </update> 
+    <!-- 修改 -->
+      <update id="updEdu_article_content" parameterType="Edu_article_content">
+       update EDU_ARTICLE_CONTENT set CONTENT=#{CONTENT}
+       where ARTICLE_ID=#{ARTICLE_ID}
+    </update>
+ 
+    
+</mapper>

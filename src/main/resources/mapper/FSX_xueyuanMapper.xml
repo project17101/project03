@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.mapper.FSX_xueyuanmapper">
+<select id="xueyuan" resultType="FSX_xueyuan" parameterType="FSX_xueyuan">
+  SELECT EDU_USER.USER_ID, EDU_USER.MOBILE, EDU_USER.EMAIL, EDU_USER.PASSWORD, 
+EDU_USER.USER_NAME, EDU_USER.SHOW_NAME, EDU_USER.SEX, EDU_USER.AGE,
+EDU_USER.CREATE_TIME, EDU_USER.IS_AVALIBLE, EDU_USER.PIC_IMG,
+EDU_USER.BANNER_URL, EDU_USER.MSG_NUM, EDU_USER.SYS_MSG_NUM, 
+EDU_USER.LAST_SYSTEM_TIME, EDU_USER.class_id,edu_class.cname
+FROM EDU_USER,edu_class
+WHERE EDU_USER.CLASS_ID=edu_class.id 
+  
+     <if test="id!=null and id!=''"> and EDU_USER.class_Id =#{id}</if>
+     
+        <if test="is_avalible!=null and is_avalible!=''"> and EDU_USER.is_avalible like '%${is_avalible}%'</if>
+        
+         <if test="create_time!=null and create_time!=''"> and EDU_USER.create_time>'${create_time}'</if>
+         
+          <if test="jieshu!=null and jieshu!=''"> and '${jieshu}'>EDU_USER.create_time</if> 
+          
+           <if test="user_name!=null  and user_name!=''">
+		    and (EDU_USER.USER_NAME like '%${user_name}%' or EDU_USER.email like '%${user_name}%' 
+		   or EDU_USER.mobile like '%${user_name}%')
+		   </if>
+</select>
+
+<select id="xialakuang" resultType="Map">
+SELECT id,cname FROM edu_class
+
+</select>
+
+ <update id="upedate" parameterType="FSX_xueyuan">
+ UPDATE edu_user set password=${password} where user_Id=${user_id}
+ 
+ </update>
+ 
+ 
+  <update id="djie"  parameterType="FSX_xueyuan">
+    UPDATE edu_user SET is_avalible=(case when ${is_avalible}=0 then 1 else 0 end)  where user_Id=${user_id}
+   </update>
+ 
+   <select id="chengji" resultType="FSX_xueyuanchengji" parameterType="FSX_xueyuanchengji">
+   SELECT u.user_Name,t.p_name,e.sdate,e.edate,e.ip,e.score 
+   FROM EDU_EXAM_INFO e,tm_paper t,edu_user u,edu_class c where e.pid=t.p_id 
+   and e.uid=u.user_Id AND c.id=u.CLASS_ID
+  <if test="id!=null and id!=''">
+  and c.id=#{id}
+  </if>
+  
+  <if test="p_name!=null and p_name!=''">
+  and t.p_name=#{p_name}
+  </if>
+   
+   </select>
+   
+   <select id="shijuan" resultType="FSX_xueyuanchengji">
+   SELECT p_name FROM tm_paper
+   </select>
+    
+
+</mapper>

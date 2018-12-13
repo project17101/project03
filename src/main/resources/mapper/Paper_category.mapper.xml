@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.Paper_categoryMapper">
+
+	<select id="findallcategory" resultType="Paper_category" parameterType="Paper_category">
+		select c_id, c_name, c_remark, c_status , c_poster , c_createdate, c_modifyor , c_modifydate 
+		from tm_paper_category order by tm_paper_category.c_createdate desc 
+	</select>
+	
+	<insert id="addpaper" parameterType="Paper_category">
+		INSERT INTO 
+		TM_PAPER_CATEGORY ( C_ID, C_NAME, C_REMARK, C_STATUS , C_POSTER , C_CREATEDATE, C_MODIFYOR , C_MODIFYDATE ) 
+		VALUES(null,#{c_name},#{c_remark} ,#{c_status} ,null ,now() ,null,now() ) 
+	</insert>
+	
+	<delete id="delpaper" parameterType="java.lang.Integer">
+		delete from TM_PAPER_CATEGORY where c_id=#{c_id}
+	</delete>
+	
+	<select id="toupcategory" parameterType="java.lang.Integer" resultType="Paper_category">
+		select c_id, c_name, c_remark, c_status , c_poster , c_createdate, c_modifyor , c_modifydate 
+		from tm_paper_category  where c_id=#{c_id}
+	</select>
+	
+	<update id="upcategory" parameterType="Paper_category">
+		UPDATE TM_PAPER_CATEGORY SET C_NAME=#{c_name}, C_STATUS=#{c_status}, C_REMARK=#{c_remark},c_modifydate=now() WHERE C_ID = #{c_id} 
+	</update>
+</mapper>

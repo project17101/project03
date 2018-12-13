@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.Exam_dbMapper">
+	<select id="findalldb" resultType="Exam_db">
+		SELECT edu_exam_db.id, edu_exam_db.dname, edu_exam_db.status, edu_exam_db.remark, edu_exam_db.adminid, edu_exam_db.cdate ,ifnull(c.nums,0) d_nums 
+		FROM edu_exam_db left join (select count(1) nums, b.dbid from edu_exam_list b group by b.dbid) c on c.dbid = edu_exam_db.id  
+	</select>
+	
+	<insert id="addexam_db" parameterType="Exam_db">
+		INSERT INTO edu_exam_db (dname,status,remark,cdate,adminid) VALUES( #{dname}, #{status}, #{remark}, now(),1 ) 
+	</insert>
+	
+	<delete id="delexam_db" parameterType="java.lang.Integer">
+		delete from edu_exam_db where edu_exam_db.id=#{id}
+	</delete>
+	
+	<select id="toupexam_db" parameterType="java.lang.Integer" resultType="Exam_db">
+		SELECT edu_exam_db.id, edu_exam_db.dname, edu_exam_db.status, edu_exam_db.remark, edu_exam_db.adminid, edu_exam_db.cdate 
+		FROM edu_exam_db 
+		WHERE edu_exam_db.id = #{id}
+	</select>
+	
+	<update id="upexam_db" parameterType="Exam_db">
+		UPDATE edu_exam_db 
+		SET edu_exam_db.dname =#{dname}, edu_exam_db.status =#{status}, edu_exam_db.remark =#{remark} 
+		WHERE edu_exam_db.id = #{id} 
+	</update>
+	
+	<select id="todbing" parameterType="java.lang.Integer" resultType="java.util.Map">
+		select qtype,count(qtype) num 
+		from edu_exam_list 
+		where dbid=#{id} group by qtype 
+	</select>
+	
+	<select id="tobin" parameterType="java.lang.Integer" resultType="java.util.Map">
+		SELECT dname, status
+		FROM edu_exam_db
+		WHERE id = #{id} 
+	</select>
+</mapper>

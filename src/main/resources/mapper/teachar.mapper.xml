@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.TeacharMapper">
+
+	<select id="findteachar" resultType="Map" parameterType="Teachar">
+		SELECT EDU_TEACHER.ID, EDU_TEACHER.NAME, EDU_TEACHER.EDUCATION, EDU_TEACHER.CAREER, EDU_TEACHER.IS_STAR, EDU_TEACHER.PIC_PATH, EDU_TEACHER.STATUS, date_format(EDU_TEACHER.CREATE_TIME,'%Y/%m/%d') CREATE_TIME, EDU_TEACHER.UPDATE_TIME, EDU_TEACHER.SUBJECT_ID, EDU_TEACHER.SORT 
+			FROM EDU_TEACHER left join sys_subject on EDU_TEACHER.SUBJECT_ID = sys_subject.subject_id 
+			WHERE EDU_TEACHER.STATUS=0 
+			<if test="name!=null and name!=''">
+				and EDU_TEACHER.NAME=#{name}
+			</if>
+			<if test="is_star!=null and is_star!='' ">
+				and EDU_TEACHER.IS_STAR=#{is_star}
+			</if>
+			<if test="start_time!=null and start_time!='' and end_time!=null and end_time!=''">
+				and EDU_TEACHER.CREATE_TIME >#{start_time} and #{end_time}>EDU_TEACHER.CREATE_TIME
+			</if>
+			ORDER BY EDU_TEACHER.SORT desc
+	</select>
+	
+	<delete id="delteachar" parameterType="java.lang.Integer">
+		delete from EDU_TEACHER where ID=#{id}
+	</delete>
+	
+	<select id="toaddteacharfindbig" resultType="Sys_subject">
+		SELECT SYS_SUBJECT.SUBJECT_ID, SYS_SUBJECT.SUBJECT_NAME, SYS_SUBJECT.STATUS, SYS_SUBJECT.CREATE_TIME, SYS_SUBJECT.PARENT_ID, SYS_SUBJECT.sort 
+		FROM SYS_SUBJECT 
+		WHERE SYS_SUBJECT.STATUS=0 
+		AND SYS_SUBJECT.PARENT_ID=0
+		ORDER BY sort desc
+	</select>
+	
+	<select id="toaddteacharfindsmall"  resultType="Sys_subject" parameterType="String">
+		SELECT SYS_SUBJECT.SUBJECT_ID, SYS_SUBJECT.SUBJECT_NAME, SYS_SUBJECT.STATUS, SYS_SUBJECT.CREATE_TIME, SYS_SUBJECT.PARENT_ID, SYS_SUBJECT.sort 
+		FROM SYS_SUBJECT 
+		WHERE SYS_SUBJECT.STATUS=0
+		and  SYS_SUBJECT.PARENT_ID=#{parent_id}
+		ORDER BY sort desc
+	</select>
+	
+	<insert id="addteachar"  parameterType="Teachar">
+		INSERT INTO EDU_TEACHER 
+		( EDU_TEACHER.ID, EDU_TEACHER.NAME, EDU_TEACHER.EDUCATION, EDU_TEACHER.CAREER, EDU_TEACHER.IS_STAR, EDU_TEACHER.PIC_PATH, EDU_TEACHER.STATUS, EDU_TEACHER.CREATE_TIME, EDU_TEACHER.UPDATE_TIME, EDU_TEACHER.SUBJECT_ID, EDU_TEACHER.SORT ) 
+		VALUES( null, #{name}, #{education}, #{career}, #{is_star}, #{pic_path}, 0, now(), now(), #{subject_id}, #{sort} ) 
+	</insert>
+	
+	<select id="toupset" parameterType="java.lang.Integer" resultType="Teachar">
+		SELECT EDU_TEACHER.ID, EDU_TEACHER.NAME, EDU_TEACHER.EDUCATION, EDU_TEACHER.CAREER, EDU_TEACHER.IS_STAR, EDU_TEACHER.PIC_PATH, EDU_TEACHER.STATUS, EDU_TEACHER.CREATE_TIME, EDU_TEACHER.UPDATE_TIME, EDU_TEACHER.SUBJECT_ID, EDU_TEACHER.SORT 
+		FROM EDU_TEACHER 
+		WHERE EDU_TEACHER.ID = #{id}
+	</select>
+	
+	<update id="upteachar" parameterType="Teachar">
+		UPDATE EDU_TEACHER 
+		SET EDU_TEACHER.NAME = #{NAMET}, EDU_TEACHER.EDUCATION = #{EDUCATION}, EDU_TEACHER.CAREER = #{CAREER}, EDU_TEACHER.IS_STAR = #{IS_STAR}, EDU_TEACHER.PIC_PATH = #{PIC_PATH}, EDU_TEACHER.UPDATE_TIME = NOW(), EDU_TEACHER.SUBJECT_ID =#{SUBJECT_ID}, EDU_TEACHER.SORT=#{SORT} 
+		WHERE EDU_TEACHER.ID = #{ID} 
+	</update>
+</mapper>
