@@ -17,23 +17,22 @@ public class CourseServiceImpl implements CourseServcie {
 
 	@Autowired
 	CourseMapper courseMapper;
-	@Override
+	 
 	public PageInfo<Course_tuijian> findCourseTJ(Course_tuijian tj) {
 		// TODO Auto-generated method stub
 		Integer startrow=tj.getStartrow();
 		Integer pagesize=tj.getPagesize();
 		PageHelper.offsetPage(startrow, pagesize);
 		List<Course_tuijian> tjlist=courseMapper.findCourseTJ(tj);
-		PageInfo<Course_tuijian> pageinfo=new PageInfo<>(tjlist); 
+		PageInfo<Course_tuijian> pageinfo=new PageInfo<Course_tuijian>(tjlist); 
 
 		return pageinfo;
 	}
-	@Override
 	public List<edu_website_course> findcourse_lx() {
 		// TODO Auto-generated method stub
 		return courseMapper.findcourse_lx();
 	}
-	@Override
+	 
 	public Integer deleteTJ(Integer id) {
 		return courseMapper.deleteTJ(id);
 	}

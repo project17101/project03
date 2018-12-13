@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.Tm_paperMapper">
+
+	<select id="findtm_paper" resultType="Tm_paper" parameterType="Tm_paper">
+		SELECT P_ID, P_NAME, P_CID, P_STATUS, P_STARTTIME, P_ENDTIME, P_DURATION, P_SHOWTIME, P_TOTAL_SCORE, P_PASS_SCORE, P_QUESTION_ORDER, P_PAPERTYPE, P_REMARK, P_DATA, P_POSTER, P_CREATEDATE, P_MODIFYOR, P_MODIFYDATE, P_SHOWKEY, P_SHOWMODE 
+		FROM TM_PAPER where 0=0
+		<if test="p_name!=null and p_name!=''">
+			and P_NAME=#{p_name} 
+		</if>
+		<if test="p_status!=null and p_status!=''">
+			and P_STATUS=#{p_status} 
+		</if>
+		<if test="p_question_order!=null and p_question_order!=''">
+			and p_question_order=#{p_question_order} 
+		</if>
+		 ORDER BY TM_PAPER.P_CREATEDATE DESC
+	</select>
+	
+	
+</mapper>

@@ -22,7 +22,11 @@ public class AjaxFilter extends OncePerRequestFilter{
         response.addHeader("Access-Control-Allow-Credentials", "true");  
         response.setCharacterEncoding("UTF-8");  
         response.setContentType("application/json");  
+<<<<<<< HEAD
         //此行代码确保请求可以继续执行至Controller  
+=======
+        //���д���ȷ��������Լ���ִ����Controller  
+>>>>>>> 8eebb2c929736ce730ed80233dfc292613a17e5f
         filterChain.doFilter(request, response);
 
 		
