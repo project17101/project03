@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.MailManagerMapper">
+	<select id="findEMHAll" parameterType="Edu_emailsend_history" resultType="Edu_emailsend_history">
+		select h.id, h.email, h.user_id, h.title, h.content, h.create_time, h.send_time, h.status, h.type , u.login_name 
+		from edu_emailsend_history h left join sys_user u on h.user_id =u.user_id where 0=0 
+		<!-- and edu_website_images.title like '%${title}%' -->
+		<if test="email!=null and email!=''">
+			and h.email like '%${email}%'
+		</if>
+		<if test="type!=null and type!=''">
+			and h.type = #{type}
+		</if>
+		<if test="status!=null and status!=''">
+			and h.status = #{status}
+		</if>
+		<if test="send_time!=null and send_time!=''">
+			and h.send_time = #{send_time}
+		</if>
+		order by h.id desc
+	</select>
+	
+	<select id="findEmailById" parameterType="java.lang.Integer" resultType="Edu_emailsend_history">
+		select h.*,u.login_name from edu_emailsend_history h,sys_user u where h.user_id=u.user_id and h.id = #{id}
+	</select>
+	
+	<delete id="delMailById" parameterType="java.lang.Integer"> 
+		delete from edu_emailsend_history where id = #{id}
+	</delete>
+	
+	<insert id="addEmail" parameterType="Edu_emailsend_history">
+		insert into edu_emailsend_history (id,email,user_id,title,content,create_time,send_time,status,type )
+		values (null, #{email}, #{user_id}, #{title}, #{content}, #{create_time}, #{send_time}, #{status}, #{type}) 
+	</insert>
+	
+</mapper>

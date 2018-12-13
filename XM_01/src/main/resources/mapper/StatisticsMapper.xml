@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.StatisticsMapper">
+
+	<!-- 已弃用 -->
+	<select id="findESD" parameterType="Edu_statistics_day" resultType="Edu_statistics_day">
+		select id, DATE_FORMAT(statistics_time,'%m月%d') , login_num, create_time, 
+		registered_num, video_viewing_num, daily_user_number, daily_course_number 
+		from edu_statistics_day
+		 WHERE edu_statistics_day.STATISTICS_TIME BETWEEN #{start_time}
+		 and #{end_time}
+	</select>
+	
+	<select id="getline" parameterType="Edu_statistics_day" resultType="java.util.Map">
+			
+		select CONCAT(MONTH(a.STATISTICS_TIME),'月',DAY(a.STATISTICS_TIME)) cdate,
+		a.sumsis from
+		(select STATISTICS_TIME,sum(${stype})as sumsis from edu_statistics_day a 
+		where STATISTICS_TIME BETWEEN #{start_time}
+			 and #{end_time}
+		group by STATISTICS_TIME order by STATISTICS_TIME asc )a
+	</select>
+	
+	<!-- 根据日期删除统计 -->
+	<delete id="delStatistics" parameterType="Edu_statistics_day">
+		delete from edu_statistics_day 
+		 where <![CDATA[statistics_time>=#{start_time}]]> and 
+		 <![CDATA[statistics_time<=#{end_time}]]>
+	</delete>
+
+</mapper>
