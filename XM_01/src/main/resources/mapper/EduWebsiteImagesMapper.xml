@@ -13,9 +13,20 @@
 		</if>
 		order by edu_website_images_type.type_id,edu_website_images.series_number
 	</select>
+	<!-- 根据id删除广告图 -->
 	<delete id="delAdImgById" parameterType="java.lang.Integer">
 		delete from edu_website_images where image_id = #{image_id}
 	</delete>
+	<!-- 新建广告图 -->
+	<insert id="addImg" parameterType="EduWebsiteImages">
+		insert into edu_website_images
+		(image_id,image_url,link_address,title,type_id,series_number,preview_url,color,describe ) 
+		value( null, #{image_url}, #{link_address}, #{title}, #{type_id}, #{series_number}, #{preview_url}, #{color}, #{describe} ) 
+	</insert>
+	<!-- 根据id查询广告图信息 -->
+	<select id="getImgById" parameterType="java.lang.Integer" resultType="EduWebsiteImages">
+		select * from edu_website_images where image_id = #{image_id}
+	</select>
 	
 	
 	

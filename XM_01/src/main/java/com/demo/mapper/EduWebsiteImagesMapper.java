@@ -20,6 +20,18 @@ public interface EduWebsiteImagesMapper {
 	 */
 	public void delAdImgById(Integer image_id);
 	
+	/**
+	 * @param ewi
+	 * 新建广告图
+	 */
+	public void addImg(EduWebsiteImages ewi);
+	
+	/**
+	 * @param ewi
+	 * 	根据id查询广告图信息
+	 */
+	public EduWebsiteImages getImgById(Integer image_id);
+	
 	
 	
 	

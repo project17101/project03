@@ -13,12 +13,18 @@ import com.github.pagehelper.PageInfo;
 public interface EduWebsiteImagesService {
 	
 	/**
-	 * ��ȡ���й��ͼ��Ϣ
+	 * 查询所有广告图片
 	 * @return
 	 */
 	public PageInfo<EduWebsiteImages> findAdImgAll(EduWebsiteImages ewi);
 	
+	//public List<EduWebsiteImages> findAdImgAllf(EduWebsiteImages ewi);
+	
 	public void delAdImgById(Integer image_id);
+	
+	public void addImg(EduWebsiteImages ewi);
+	
+	public EduWebsiteImages getImgById(Integer image_id);
 	
 	
 	

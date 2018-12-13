@@ -39,6 +39,16 @@ public class EduWebsiteImagesServiceImpl implements EduWebsiteImagesService {
 		// TODO Auto-generated method stub
 		ewiMapper.delAdImgById(image_id);
 	}
+	@Override
+	public void addImg(EduWebsiteImages ewi) {
+		// TODO Auto-generated method stub
+		ewiMapper.addImg(ewi);
+	}
+	@Override
+	public EduWebsiteImages getImgById(Integer image_id) {
+		// TODO Auto-generated method stub
+		return ewiMapper.getImgById(image_id);
+	}
 	
 	
 	
@@ -71,10 +81,5 @@ public class EduWebsiteImagesServiceImpl implements EduWebsiteImagesService {
 		// TODO Auto-generated method stub
 		ewiMapper.upAdImgTypeById(ewit);
 	}
-
-
-
-
-
 
 }
