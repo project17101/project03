@@ -1,4 +1,11 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
+encoding//src/main/java/com/demo/controller/MediaAdSys.java=UTF-8
+encoding//src/main/java/com/demo/mapper/EduWebsiteImagesMapper.java=UTF-8
+encoding//src/main/java/com/demo/service/Impl/EduWebsiteImagesServiceImpl.java=UTF-8
+encoding/<project>=UTF-8
+=======
 encoding//src/main/java/com/demo/controller/Edu_articleController.java=UTF-8
 encoding//src/main/java/com/demo/service/Impl/Edu_articleServiceImpl.java=UTF-8
 encoding//src/main/java/com/demo/service/interfaces/Edu_articleService.java=UTF-8
+>>>>>>> 8eebb2c929736ce730ed80233dfc292613a17e5f
